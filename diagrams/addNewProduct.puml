@@ -1,0 +1,63 @@
+@startuml
+
+' use strict UML mode
+skinparam style strictuml
+
+'Creating a user actor
+actor "User" as user
+
+'creating the Administration class
+participant "Administration" as admin <<main>>
+admin++
+
+'Creating a main menu
+create "Main Menu" as mainmenu <<JFrame>>
+admin->mainmenu:construct
+user->mainmenu++ : click "add new product" button
+
+'Creating the product editor screen dialog
+create "Product Editor" as prodeditor <<dialog>>
+mainmenu->prodeditor++ : construct
+
+'Creating the Collectiondao
+create "Collectiondao" as dao <<DAO>>
+prodeditor->dao :construct
+
+'creating the simple list
+create "SimpleListModel" as listmodel <<gui helpers>>
+dao->listmodel: construct
+
+'categories being passed from the Collectiondao to the categories drop down menu
+prodeditor->dao++ : getCategories() : listCategories
+return categories
+
+'populate combo box with categories
+prodeditor->prodeditor:setModel(comboCategories)
+prodeditor--
+
+'Has to be after dao creation due to needing the categories to be returned first
+user->prodeditor++ : User enters product details
+prodeditor--
+user->prodeditor++ : click "Save" button
+
+'product details saved using the dao saveProduct method
+prodeditor->dao++ : saveProduct()
+dao--
+
+'product details saved into the JList
+prodeditor->listmodel++ :updateItems()
+listmodel--
+
+create "View Products" as viewproducts <<dialog>>
+prodeditor->viewproducts++ :construct
+viewproducts-->user :setModel(displayProducts)
+
+'user clicks cancel instead of save
+user->prodeditor++ :click "Cancel" button
+prodeditor->prodeditor : dispose()
+prodeditor->mainmenu
+
+'Cancel button returns user to the main menu
+destroy prodeditor
+
+@enduml

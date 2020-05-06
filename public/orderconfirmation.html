@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html ng-app="ShoppingApp">
+	<head>
+		<title>Order Confirmation</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<script src="js/angular.min.js"></script>
+        <script src="js/angular-resource.min.js"></script>
+        <script src="js/ngStorage.min.js"></script>
+        <script src="js/shopping.js"></script>
+		  <link rel="stylesheet" href="css/Style.css">
+	</head>
+	<body>
+		
+		<div ng-include="'menu.html'" ></div>
+      <h3>Thank you for your order!</h3>
+		<p>Our team are busy putting you order together, a tracking number will be sent once
+			your order has been dispatched.</p>
+		<img src="images/goodbye.jpg" alt="bye" style="width:500px;height:200px;" >
+		<p>
+		To order more products<a href="products.html"> click here </a> </p>
+		
+	</body>
+</html>

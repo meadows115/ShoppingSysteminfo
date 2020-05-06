@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app="ShoppingApp">
+	<head>
+		<title>Purchase</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="js/angular.min.js"></script>
+        <script src="js/angular-resource.min.js"></script>
+        <script src="js/ngStorage.min.js"></script>
+        <script src="js/shopping.js"></script>
+		   <link rel="stylesheet" href="css/Style.css">
+	</head>
+
+	<body>
+		<div ng-include="'menu.html'" ></div>
+		<div ng-controller="ShoppingCartController as cartCtrl">
+      <h1> How many products would you like to buy?</h1>
+		<table>
+			<tr>
+				<th>ID:</th>
+				<td>{{cartCtrl.selectedProduct.productID}}</td>
+			</tr>
+			<tr>
+				<th>Name:</th>
+				<td>{{cartCtrl.selectedProduct.name}}</td>
+			</tr>
+			<tr>
+				<th>Description:</th>
+				<td>{{cartCtrl.selectedProduct.description}}</td>
+			</tr>
+			<tr>
+				<th>Price:</th>
+			<td>{{cartCtrl.selectedProduct.listPrice| currency}}</td>
+			</tr>
+			<tr>
+				<th>Quantity Available:</th>
+				<td>{{cartCtrl.selectedProduct.quantityInStock}}</td>
+			</tr>
+		</table>
+		<form>
+			<fieldset>
+				<legend> <b> Quantity to buy </b></legend>
+				How many? <input type="number" ng-model="quantity"><br>
+				<button type="button" ng-click="cartCtrl.addToCart(quantity)"> Add to cart</button>
+			</fieldset>
+		</form>
+		</div>
+	</body>
+</html>

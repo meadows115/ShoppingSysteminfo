@@ -1,0 +1,38 @@
+@startuml
+' use strict UML mode
+skinparam style strictuml
+
+'Creating a user actor
+actor "User" as user
+
+'creating the Administration class
+participant "Administration" as admin <<main>>
+admin++
+
+'Creating the main menu frame
+create "Main Menu" as mainmenu <<JFrame>>
+admin->mainmenu:construct
+user->mainmenu++ : click "view products" button
+
+'Creating the view products dialog
+create "View Products" as viewproducts <<dialog>>
+mainmenu->viewproducts++ :construct
+
+'Creating the DAO 
+create "Collectiondao" as dao <<DAO>>
+viewproducts->dao:construct
+
+'retrieve the products, returns all of the products
+viewproducts->dao++ :getProducts()
+dao--
+ 
+'Creating the gui helper model
+create "SimpleListModel" as listmodel <<gui helpers>>
+dao->listmodel:construct
+
+'return the array of products 
+listmodel->viewproducts:SimpleListModel(items)
+
+viewproducts->viewproducts:dispose()
+destroy viewproducts
+@enduml

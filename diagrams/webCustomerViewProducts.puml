@@ -1,0 +1,43 @@
+@startuml
+' use strict UML mode
+skinparam style strictuml
+
+'Creating a customer actor
+actor "Customer" as customer
+
+'creating products web page
+participant "Products Web Page" as productsPage <<html>>
+
+'creating the product controller
+participant "ProductController" as productController <<AngularJS>>
+
+'creating the jooby module
+participant "ProductModule" as jooby <<Jooby>>
+
+'creating the product dao
+participant "ProductManagerdao" as dao <<DAO>>
+
+customer->productsPage : Customer clicks "Browse Products" in navigation bar
+productsPage->productController++ : Create ProductController as prodCtrl 
+
+productController->productController: productDAO.query();
+productController->jooby++ : GET request /api/products/:id
+jooby->dao++ : ProductManagerdao.getProducts()
+dao->jooby : return products 
+jooby->jooby: products encoded using JSON
+dao--
+jooby->productController: return JSON products
+jooby--
+productController->productsPage: All Products passed using ng-repeat="product in prodCtrl.products"
+
+productController->productController: categoryDAO.query();
+productController->jooby++ : GET request /api/categories
+jooby->dao++ : ProductManagerdao.getCategories();
+dao->jooby: return categories
+jooby->jooby: categories encoded using JSON
+jooby->productController: return JSON categories
+jooby--
+productController->productsPage: All categories passed using ng-repeat="cat in prodCtrl.categories"
+productsPage->customer: Waiting for user to select a product or category
+productsPage--
+@enduml
